@@ -50,6 +50,7 @@ html {
   font-size: var(--font-size-base);
   height: 100%;
   scroll-behavior: smooth;
+  cursor:none;
 }
 
 body {
