@@ -1,0 +1,88 @@
+{% extends 'base.html' %} {% block title %} FAQ {% endblock %} {% block content
+%}
+
+<div class="faq">
+  <div class="container">
+    <div class="faq--header">
+      <div class="backBtn__wrapper">
+        <div class="arrow_back">
+          <a href="{{ url_for('help') }}"
+            ><i class="fa-solid fa-arrow-left"></i
+          ></a>
+        </div>
+      </div>
+      <div class="faq--text">
+        <h1>Frequently Asked Questions (FAQs)</h1>
+      </div>
+    </div>
+    <div class="accodrion__wrapper">
+      <button class="accordion">
+        <div class="question--text">
+          What deep learning model did you use for object detection and
+          segmentation?
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="accordion--panel">
+        <p>
+          We used YOLOv8-M Segment (YOLOv8m-seg), a state-of-the-art model
+          developed by Ultralytics for real-time object detection and instance
+          segmentation.
+        </p>
+      </div>
+      <button class="accordion">
+        <div class="question--text">
+          Why is image processing used in egg size classification?
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="accordion--panel">
+        <p>
+          Image processing allows the system to analyze visual data of eggs to
+          extract relevant features, such as shape and size.
+        </p>
+      </div>
+      <button class="accordion">
+        <div class="question--text">
+          What dataset is used for training the model?
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="accordion--panel">
+        <p>
+          The model is trained using a dataset consisting of labeled images of
+          eggs with different sizes. These images are pre-processed to ensure
+          uniformity and quality.
+        </p>
+      </div>
+      <button class="accordion">
+        <div class="question--text">
+          What is the potential application of this research in the industry?
+        </div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="accordion--panel">
+        <p>
+          This automated classification system can be applied in the
+          agricultural industry, particularly in poultry farming and egg
+          packaging, where precise egg size classification is essential for
+          quality control and packaging processes.
+        </p>
+      </div>
+      <button class="accordion">
+        <div class="question--text">How will the system be evaluated?</div>
+        <i class="fa-solid fa-chevron-down"></i>
+      </button>
+      <div class="accordion--panel">
+        <p>
+          The system will be evaluated based on its classification accuracy, its
+          ability to handle various egg shapes and sizes, and its performance on
+          a validation set that was not part of the training data. The
+          evaluation process will also include testing under real-world
+          conditions to assess practical usability.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{%endblock%}

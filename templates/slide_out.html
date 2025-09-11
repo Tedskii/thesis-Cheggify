@@ -1,0 +1,86 @@
+{% extends 'base.html' %} 
+{% block title %}Slide Out Prompt Page{% endblock %}
+{% block content %}
+
+<div class="prompt1">
+  <div class="container">
+    <div class="prompt__wrapper">
+      <div class="prompt__img">
+        <img src="{{ url_for('static', filename='images/open.gif') }}" alt="" />
+      </div>
+      <div class="prompt__text">
+        Slide out the drawer and remove the eggs on each slot.
+      </div>
+      <a
+        href="#"
+        class="custom-button"
+        onclick="showBatchConfirmationModal(event)"
+        >Next</a>
+    </div>
+  </div>
+
+  <!-- Batch Confirmation Modal -->
+  <div id="batchConfirmModal" class="confirm-modal" style="display:none;">
+    <div class="confirm-modal-content">
+      <h3>Would you like to actuate another size?</h3>
+      <div class="confirm-buttons">
+        <button id="confirmYes" class="confirm-btn confirm-yes">Yes</button>
+        <button id="confirmNo" class="confirm-btn confirm-no">No</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Other Sizes Modal -->
+  <div id="noOtherSizesModal" class="confirm-modal" style="display:none;">
+    <div class="confirm-modal-content">
+      <h3>No other sizes are available in this batch.</h3>
+      <p>You will be redirected shortly...</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__wrapper">
+        <div class="footer__text">
+          <p>Tap the button to continue</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  function showBatchConfirmationModal(event) {
+    event.preventDefault(); 
+    document.getElementById("batchConfirmModal").style.display = "flex";
+  }
+
+  document.getElementById("confirmYes").addEventListener("click", () => {
+    // Get available sizes from Flask
+    const availableSizes = JSON.parse('{{ available_sizes | default([]) | tojson | safe }}');
+
+    if (availableSizes.length === 0) {
+      // Hide confirm modal
+      document.getElementById("batchConfirmModal").style.display = "none";
+      // Show "No Other Sizes" modal
+      const modal = document.getElementById("noOtherSizesModal");
+      modal.style.display = "flex";
+
+      // Auto redirect after 3 seconds
+      setTimeout(() => {
+        window.location.href = "/slidein";
+      }, 3000);
+    } else {
+      // Redirect to size selection
+      window.location.href = "/sizeselect?show_invalid=true";
+    }
+  });
+
+  document.getElementById("confirmNo").addEventListener("click", () => {
+    window.location.href = "/slidein";
+  });
+</script>
+
+<div id="toSlideIn" data-url="{{ url_for('slideIn') }}" style="display: none"></div>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %} Shutdown {% endblock %} {% block
+content %}
+
+<div class="shutdown">
+  <div class="container">
+    <div class="shutdownLoader__wrapper">
+      <div class="ui-loader loader-blk">
+        <svg viewBox="22 22 44 44" class="multiColor-loader">
+          <circle
+            cx="44"
+            cy="44"
+            r="20.2"
+            fill="none"
+            stroke-width="3.6"
+            class="loader-circle loader-circle-animation"></circle>
+        </svg>
+      </div>
+      <div class="shutdownLoader__wrapper--text">
+        <h2>Shutting Down</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock%}

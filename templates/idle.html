@@ -1,0 +1,46 @@
+  {% extends 'base.html'%} {% block title %} Idle Page {% endblock %} {% block content%}
+
+  <div class="loader">
+    <div class="container">
+      <div class="loader__wrapper">
+        <div class="eggGrp__wrapper">
+          <i class="fa-solid fa-egg"></i>
+          <i class="fa-solid fa-egg"></i>
+          <i class="fa-solid fa-egg"></i>
+          <i class="fa-solid fa-egg"></i>
+          <i class="fa-solid fa-egg"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__wrapper">
+        <div class="footer__text">
+          <p>Tap anywhere to continue</p>
+        </div>
+      </div>
+      </div>
+    </footer>
+  </div>
+
+
+
+<script>
+    document.addEventListener("click", function() {
+      document.body.classList.add("fade-out"); // Apply fade effect
+
+      setTimeout(function() {
+        window.location.href = "{{ url_for('home') }}"; // Redirect after fade-out
+      }, 500); // Wait for animation to finish (0.5s)
+    });
+  </script>
+  <style>
+    .fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease-out; /* Smooth fade effect */
+    }
+  </style>
+
+  {% endblock %}

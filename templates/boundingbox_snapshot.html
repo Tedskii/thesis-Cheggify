@@ -1,0 +1,23 @@
+{% extends 'base.html' %} {% block title %}Caputred Image with Bounding Boxes
+Page{% endblock %} {% block content %}
+
+<div class="initialImg">
+  <div class="container">
+    <div class="initalImg__wrapper">
+      <div class="initialImg--text">
+        <h2>Prediction Completed!</h2>
+        <h3>
+          Here is the predicted tray image with bounding boxes.
+        </h3>
+      </div>
+      <div class="initialImg--img">
+        <img
+          src="{{ url_for('static', filename='predicted_images/predicted_latest.jpg') }}"
+          alt="Predicted Image with Bounding Boxes" />
+      </div>
+      <a href="{{ url_for('selectSize')}}" class="custom-button"> Next </a>
+    </div>
+  </div>
+</div>
+
+{%endblock%}

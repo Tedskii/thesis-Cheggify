@@ -1,0 +1,133 @@
+{% extends 'base.html' %} {% block title %} About Page {% endblock %} {% block
+content %}
+
+<div class="about">
+  <div class="container">
+    <div class="about__wrapper">
+      <div class="header__wrapper">
+        <div class="backbtn__wrapper">
+          <div class="arrow_back">
+            <a href="{{ url_for('home') }}"
+              ><i class="fa-solid fa-arrow-left"></i
+            ></a>
+          </div>
+        </div>
+        <div class="aboutText__wrapper">
+          <div class="about__text">
+            <h1>About Us</h1>
+            <h2>The Proponents</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- Proponents Carousel -->
+      <div class="content__wrapper">
+        <div class="carousel">
+          <div class="carousel__wrapper">
+            <div class="carousel__track">
+              <!-- Proponent 1 -->
+              <div class="profile--card">
+                <div class="profile--img">
+                  <img
+                    src="{{ url_for('static', filename='images/BulandosPic.jpg') }}"
+                    alt="Proponent 1" />
+                </div>
+                <div class="profile--info">
+                  <h2>Jomelle Ivan R. <span>Bulandos</span></h2>
+                  <p>Hardware Developer/Documentation Head</p>
+                </div>
+              </div>
+
+              <!-- Proponent 2 -->
+              <div class="profile--card">
+                <div class="profile--img">
+                  <img
+                    src="{{ url_for('static', filename='images/CabuyaoPic.jpg') }}"
+                    alt="Proponent 2" />
+                </div>
+                <div class="profile--info">
+                  <h2>Ted Mari H. <span>Cabuyao</span></h2>
+                  <p>Frontend/Backend Developer</p>
+                </div>
+              </div>
+
+              <!-- Proponent 3 -->
+              <div class="profile--card">
+                <div class="profile--img">
+                  <img
+                    src="{{ url_for('static', filename='images/DayapanPic.jpg') }}"
+                    alt="Proponent 3" />
+                </div>
+                <div class="profile--info">
+                  <h2>Lawrence Ruehj C. <span>Dayapan</span></h2>
+                  <p>Hardware Designer</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Egg Indicator -->
+        <div class="page-indicator">
+          <i class="fa-solid fa-egg" data-index="0"></i>
+          <i class="fa-solid fa-egg" data-index="1"></i>
+          <i class="fa-solid fa-egg" data-index="2"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Initialize the Tiny Slider
+  const slider = tns({
+    container: ".carousel__track",
+    items: 1,
+    slideBy: "page",
+    speed: 600,
+    autoplay: true,
+    autoplayButtonOutput: false,
+    controls: true, // disable built-in arrows
+    nav: false, // disable dots
+    loop: true,
+  });
+
+  const eggIndicators = document.querySelectorAll(".page-indicator i");
+
+  function updateIndicators(index) {
+    eggIndicators.forEach((icon, i) => {
+      if (i === index) {
+        icon.classList.add("active");
+      } else {
+        icon.classList.remove("active");
+      }
+    });
+  }
+
+  // On egg click, move slider
+  eggIndicators.forEach((icon) => {
+    icon.addEventListener("click", () => {
+      const index = parseInt(icon.getAttribute("data-index"));
+      slider.goTo(index);
+    });
+  });
+
+  // Highlight correct egg on slide change
+  slider.events.on("indexChanged", (info) => {
+    const slideIndex = info.displayIndex - 1; // displayIndex starts at 1
+    updateIndicators(slideIndex);
+  });
+
+  // Set initial active egg
+  updateIndicators(0);
+
+  // Replace text with Font Awesome icons
+  const prevBtn = document.querySelector('[data-controls="prev"]');
+  const nextBtn = document.querySelector('[data-controls="next"]');
+  if (prevBtn && nextBtn) {
+    prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+    nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+  }
+</script>
+
+{% endblock %}

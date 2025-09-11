@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}Live Snapshot{% endblock %}
+{% block content %}
+
+<div class="liveSnapshot">
+  <div class="container">
+    <div class="liveSnapshot__wrapper">
+      <div class="liveSnapshot--text">
+        <h2>Live Camera Feed</h2>
+        <h3>Align the tray properly, then capture an image.</h3>
+      </div>
+
+      <!-- Live feed -->
+      <div class="liveSnapshot--video">
+        <img id="liveFeed" src="{{ url_for('video_feed') }}" alt="Live Camera Feed" />
+      </div>
+
+      <!-- Capture button -->
+      <div class="liveSnapshot__buttons">
+        <a href="#" class="custom-button" onclick="openConfirmModal()">Capture</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Snapshot Confirmation Modal -->
+  <div id="snapshotConfirmModal" class="confirm-modal">
+    <div class="confirm-modal-content">
+      <h3>Is the egg alignment okay?</h3>
+      <div class="confirm-buttons">
+        <button class="confirm-btn confirm-yes" onclick="confirmCapture()">Yes</button>
+        <button class="confirm-btn confirm-no" onclick="closeConfirmModal()">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function openConfirmModal() {
+    document.getElementById("snapshotConfirmModal").style.display = "flex";
+  }
+
+  function closeConfirmModal() {
+    document.getElementById("snapshotConfirmModal").style.display = "none";
+  }
+
+  async function confirmCapture() {
+    try {
+      // Request backend to capture snapshot
+      const response = await fetch("{{ url_for('capture_live_snapshot') }}");
+      const data = await response.json();
+
+      if (data.status === "success") {
+        // Redirect to initial snapshot preview
+        window.location.href = "{{ url_for('initialSnapshot') }}";
+      } else {
+        alert("Error capturing image: " + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to capture snapshot.");
+    }
+  }
+</script>
+
+{% endblock %}

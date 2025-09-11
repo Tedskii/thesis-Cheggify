@@ -1,0 +1,28 @@
+{% extends 'base.html' %} {% block title %}Slide Out Prompt Page{% endblock %}
+{% block content %}
+
+<div class="prompt1">
+  <div class="container">
+    <div class="prompt__wrapper">
+      <div class="prompt__img">
+        <img src="{{ url_for('static', filename='images/open.gif') }}" alt="" />
+      </div>
+      <div class="prompt__text">
+        Slide out the drawer and place the eggs on each slots.
+      </div>
+      <a href="{{ url_for('prompt2') }}" class="custom-button"> Next </a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__wrapper">
+        <div class="footer__text">
+          <p>Tap the button to continue</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+{%endblock%}

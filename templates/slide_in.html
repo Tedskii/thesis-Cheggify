@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Slide Out Prompt Page{% endblock %}
+{% block content %}
+
+<div class="prompt1">
+  <div class="container">
+    <div class="prompt__wrapper">
+      <div class="prompt__img">
+        <img src="{{ url_for('static', filename='images/open.gif') }}" alt="" />
+      </div>
+      <div class="prompt__text">
+        Slide in the drawer to reset the mechanism.
+      </div>
+      <a href="#" class="custom-button" onclick="resetProcessed()">Next</a>
+    </div>
+  </div>
+</div>
+
+<!-- Loader -->
+<div class="loader" id="loader" style="display: none">
+  <div class="container">
+    <div class="loader__wrapper">
+      <div class="eggGrp__wrapper">
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+      </div>
+      <div class="footer__text"><h3>Resetting Mechanism...</h3></div>
+    </div>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div id="resetDoneModal" class="confirm-modal" style="display: none">
+  <div class="confirm-modal-content">
+    <h3>All slots have been reset successfully.</h3>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="goHome()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Error Modal -->
+<div id="errorModal" class="confirm-modal" style="display: none">
+  <div class="confirm-modal-content">
+    <h3 id="errorMessage">Something went wrong.</h3>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="goHome()">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  function resetProcessed() {
+    // Show loader
+    document.getElementById("loader").style.display = "block";
+
+    fetch("/reset_processed", { method: "POST" })
+      .then(res => res.json())
+      .then(data => {
+        // Hide loader
+        document.getElementById("loader").style.display = "none";
+
+        if (data.status === "success") {
+          document.getElementById("resetDoneModal").style.display = "flex";
+        } else {
+          document.getElementById("errorMessage").innerText = data.message || "Error occurred.";
+          document.getElementById("errorModal").style.display = "flex";
+        }
+      })
+      .catch(err => {
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("errorMessage").innerText = "Request failed: " + err;
+        document.getElementById("errorModal").style.display = "flex";
+      });
+  }
+
+  function goHome() {
+    window.location.href = "/home";
+  }
+</script>
+
+{% endblock %}

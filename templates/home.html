@@ -1,0 +1,68 @@
+{% extends 'base.html' %} {% block title %}Home Page{% endblock %} {% block
+content %}
+
+<!-- Main Menu -->
+<div class="mainMenu">
+  <div class="container">
+    <header class="header__logo">
+      <img
+        src="{{ url_for('static', filename='images/LOGO_darktxt (1).png') }}"
+        alt="" />
+    </header>
+    <div class="mainMenu__wrapper">
+      <div class="btnGroup__wrapper">
+        <a href="{{ url_for('prompt1') }}" class="action-btn start--btn">
+          <i class="fa-solid fa-egg"></i>
+          <span>Start</span>
+        </a>
+        <a href="{{ url_for('help') }}" class="action-btn help--btn">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Help</span>
+        </a>
+        <a href="{{ url_for('about') }}" class="action-btn about--btn">
+          <i class="fa-solid fa-circle-info"></i>
+          <span>About</span>
+        </a>
+        <!-- Off Button -->
+        <a href="#" class="action-btn off--btn" onclick="shutdownNow(event)">
+          <i class="fa-solid fa-power-off"></i>
+          <span>Off</span>
+        </a>
+      </div>
+    </div>
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="confirm-modal">
+      <div class="confirm-modal-content">
+        <h3>Are you sure you want to shut down the system?</h3>
+        <div class="confirm-buttons">
+          <button id="confirmYes" class="confirm-btn confirm-yes">Yes</button>
+          <button id="confirmNo" class="confirm-btn confirm-no">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Shutdown Loader -->
+<div class="shutdown">
+  <div class="container">
+    <div class="shutdownLoader__wrapper" style="display: none">
+      <div class="ui-loader loader-blk">
+        <svg viewBox="22 22 44 44" class="multiColor-loader">
+          <circle
+            cx="44"
+            cy="44"
+            r="20.2"
+            fill="none"
+            stroke-width="3.6"
+            class="loader-circle loader-circle-animation"></circle>
+        </svg>
+      </div>
+      <div class="shutdownLoader__wrapper--text">
+        <h2>Shutting Down...</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

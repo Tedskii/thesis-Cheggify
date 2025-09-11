@@ -1,0 +1,56 @@
+{% extends 'base.html'%}
+{% block title %} Startup {% endblock %}
+{% block content %}
+
+<div class="loader">
+  <div class="container">
+    <div class="loader__wrapper">
+      <div class="eggGrp__wrapper">
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+        <i class="fa-solid fa-egg"></i>
+      </div>
+
+      <!-- Status text -->
+      <p id="status-text">Starting...</p>
+
+      <!-- Progress bar -->
+      <div class="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function checkStatus() {
+  try {
+    const res = await fetch("/status");
+    const data = await res.json();
+
+    // Update status text
+    document.getElementById("status-text").innerText = data.message;
+
+    // Update progress bar
+    document.getElementById("progress-fill").style.width = data.progress + "%";
+
+    if (data.progress >= 100) {
+      setTimeout(() => {
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+          window.location.href = "{{ url_for('home') }}";
+        }, 800);
+      }, 1000);
+    }
+  } catch (e) {
+    document.getElementById("status-text").innerText = "Error connecting.";
+  }
+}
+
+// Poll backend every second
+setInterval(checkStatus, 1000);
+</script>
+
+{% endblock %}

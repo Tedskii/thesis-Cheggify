@@ -1,0 +1,8 @@
+
+__pycache__/
+*.pyc
+*.log
+.env
+venv/
+static/captured_images/
+static/predicted_images/

@@ -1,0 +1,91 @@
+{% extends 'base.html' %} {% block title %} Help{% endblock %} {% block content
+%}
+
+<div class="help">
+  <div class="container">
+    <div class="help__wrapper">
+      <div class="backBtn__wrapper">
+        <div class="arrow_back">
+          <a href="{{ url_for('home') }}"
+            ><i class="fa-solid fa-arrow-left"></i
+          ></a>
+        </div>
+      </div>
+      <div class="header--text">
+        <h1>How to use?</h1>
+      </div>
+      <div class="faq_btn">
+        <a href="{{ url_for('faq') }}"
+          ><i class="fa-solid fa-person-circle-question"></i
+        ></a>
+      </div>
+    </div>
+
+    <div class="how-to-use">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div class="step-icon">
+          <i class="fas fa-egg"></i>
+        </div>
+        <div class="step-content">
+          <strong>Place eggs to the capture Chamber</strong>
+          <p>Follow the orientation of the holder when placing the eggs</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div class="step-icon">
+          <i class="fas fa-arrow-right-arrow-left"></i>
+        </div>
+        <div class="step-content">
+          <strong>Slide in the drawer to the imaging area</strong>
+          <p>
+            To start the classification, the system must first detect 30 eggs on
+            its sight
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div class="step-icon">
+          <i class="fas fa-magnifying-glass-chart"></i>
+        </div>
+        <div class="step-content">
+          <strong>Automatic analysis will start</strong>
+          <p>
+            A result snapshot will be presented in the screen of the size of
+            each eggs.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div class="step-icon"><i class="fas fa-hand-pointer"></i></div>
+        <div class="step-content">
+          <strong>Select the size of egg you want to classify.</strong>
+          <p>
+            It will engage the physical mechanism to classify the eggs based on
+            user input
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">5</div>
+        <div class="step-icon"><i class="fas fa-arrow-left-long"></i></div>
+        <div class="step-content">
+          <strong>Slide out the drawer to remove the classified eggs.</strong>
+          <p>
+            A fresh batch of eggs can now be placed into the emptied slots to
+            start the process again!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,120 @@
+{% extends 'base.html' %} 
+{% block title %}Initial Captured Image Page{% endblock %} 
+{% block content %}
+
+<div class="initialImg">
+  <div class="container">
+    <div class="initalImg__wrapper">
+      <div class="initialImg--text">
+        <h2>Image Captured!</h2>
+        <h3>Here is the initial snapshot of the captured tray image.</h3>
+      </div>
+
+      <div class="initialImg--img">
+        {% if image_url %}
+          <img src="{{ image_url }}" alt="Captured Image" />
+        {% else %}
+          <p>No captured image found.</p>
+        {% endif %}
+        <!-- Next button opens modal -->
+        <a href="#" class="custom-button" onclick="showSnapshotModal(event)">Next</a>
+      </div>
+
+      <!-- Snapshot Confirmation Modal -->
+      <div id="snapshotConfirmModal" class="confirm-modal">
+        <div class="confirm-modal-content">
+          <h3>Is this snapshot okay?</h3>
+          <div class="confirm-buttons">
+            <!-- YES button -->
+            <button 
+              id="confirmYes" 
+              class="confirm-btn confirm-yes">
+              Yes
+            </button>
+            <!-- NO button -->
+            <button 
+              id="confirmNo" 
+              class="confirm-btn confirm-no">
+              No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prediction modal -->
+  <div class="predictionModal">
+    <div class="modal-content">
+      <div class="spinner" style="display: none"></div>
+      <div class="checkmark" style="display: none">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <p class="predictionModalText"></p>
+      <button class="close-btn" onclick="closePredictionModal()" style="display: none">
+        OK
+      </button>
+    </div>
+  </div>
+
+  <div id="urlData" data-url="{{ url_for('boundingboxSnapshot') }}" style="display: none"></div>
+</div>
+
+<script>
+function showSnapshotModal(e) {
+  e.preventDefault();
+  document.getElementById("snapshotConfirmModal").style.display = "flex";
+}
+
+function closeSnapshotModal() {
+  document.getElementById("snapshotConfirmModal").style.display = "none";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  // NO → back to live snapshot
+  document.getElementById("confirmNo").onclick = function () {
+    window.location.href = "/live_snapshot";
+  };
+
+  // YES → call /predict
+  document.getElementById("confirmYes").onclick = function () {
+    const predictionModal = document.querySelector(".predictionModal");
+    const spinner = predictionModal.querySelector(".spinner");
+    const text = predictionModal.querySelector(".predictionModalText");
+    const checkmark = predictionModal.querySelector(".checkmark");
+    const closeBtn = predictionModal.querySelector(".close-btn");
+
+    // Reset modal state
+    predictionModal.style.display = "flex";
+    spinner.style.display = "block";
+    checkmark.style.display = "none";
+    closeBtn.style.display = "none";
+    text.innerText = "Processing prediction...";
+
+    fetch("/predict", { method: "POST" }) // safer to POST
+      .then((res) => res.json())
+      .then((data) => {
+        spinner.style.display = "none";
+
+        if (data.status === "success") {
+          checkmark.style.display = "block";
+          text.innerText = "Prediction completed!";
+          setTimeout(() => {
+            window.location.href = "/boundingboxSnapshot";
+          }, 1500);
+        } else {
+          text.innerText = "⚠️ Error: " + (data.message || "Unknown error");
+          closeBtn.style.display = "inline-block";
+        }
+      })
+      .catch((err) => {
+        spinner.style.display = "none";
+        text.innerText = "⚠️ Server error: " + err;
+        closeBtn.style.display = "inline-block";
+      });
+  };
+});
+</script>
+
+
+{% endblock %}

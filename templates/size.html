@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block title %}Size Selection Page{% endblock %}
+
+{% block content %}
+<div class="sizeSelection">
+  <div class="container">
+    <div class="sizeSelection__wrapper">
+      <div class="sizeSelection__wrapper--text">
+        <h1>Select Egg Size</h1>
+        <h2>Click a size to actuate the corresponding slots</h2>
+      </div>
+
+      <div class="sizeList__wrapper">
+        <li><button class="sizeBtn {% if 's' in processed_sizes %}disabled{% endif %}" data-size="s">Small</button></li>
+        <li><button class="sizeBtn {% if 'm' in processed_sizes %}disabled{% endif %}" data-size="m">Medium</button></li>
+        <li><button class="sizeBtn {% if 'l' in processed_sizes %}disabled{% endif %}" data-size="l">Large</button></li>
+        <li><button class="sizeBtn {% if 'xl' in processed_sizes %}disabled{% endif %}" data-size="xl">Extra Large</button></li>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Invalid Selection Modal -->
+<div id="invalidModal" class="confirm-modal" style="display:none;">
+  <div class="confirm-modal-content">
+    <h3>Some sizes have already been classified and cannot be selected again.</h3>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="closeInvalidModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- All Classified Modal -->
+<div id="allDoneModal" class="confirm-modal" style="display:none;">
+  <div class="confirm-modal-content">
+    <h3>All sizes have been classified. The tray will now slide in.</h3>
+    <p>You will be redirected shortly...</p>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="redirectToSlideIn()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- No Predictions Modal -->
+<div id="noPredModal" class="confirm-modal" style="display:none;">
+  <div class="confirm-modal-content">
+    <h3>No egg sizes were detected from the prediction.</h3>
+    <p>Please slide the tray in and try again.</p>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="redirectToSlideIn()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Not in Batch Modal -->
+<div id="notInBatchModal" class="confirm-modal" style="display:none;">
+  <div class="confirm-modal-content">
+    <h3>The selected size is not present in this batch.</h3>
+    <p>Please choose a size that was detected.</p>
+    <div class="confirm-buttons">
+      <button class="confirm-btn confirm-ok" onclick="closeNotInBatchModal()">OK</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const buttons = document.querySelectorAll(".sizeBtn");
+  const status = document.getElementById("statusMessage");
+
+  function closeInvalidModal() {
+    document.getElementById("invalidModal").style.display = "none";
+  }
+
+  function closeNotInBatchModal() {
+    document.getElementById("notInBatchModal").style.display = "none";
+  }
+
+  function redirectToSlideIn() {
+    window.location.href = "/slidein";
+  }
+
+  // Get processed sizes from Flask
+  const processedSizes = JSON.parse('{{ processed_sizes | tojson | safe }}');
+  const predictedSizes = JSON.parse('{{ predicted_sizes | tojson | safe }}');
+
+  const allSizes = ["s", "m", "l", "xl"];
+  const allDone = allSizes.every(size => processedSizes.includes(size));
+  const noPredictions = predictedSizes.length === 0;
+
+  if (noPredictions) {
+    // Disable all buttons
+    buttons.forEach(btn => {
+      btn.classList.add("disabled");
+      btn.style.opacity = "0.5";
+      btn.style.pointerEvents = "none";
+    });
+    document.getElementById("noPredModal").style.display = "flex";
+  } else if (allDone) {
+    // Grey out all buttons
+    buttons.forEach(btn => {
+      btn.classList.add("disabled");
+      btn.style.opacity = "0.5";
+      btn.style.pointerEvents = "none";
+    });
+
+    // Show "all done" modal immediately
+    const modal = document.getElementById("allDoneModal");
+    modal.style.display = "flex";
+
+    // Auto redirect after 3s
+    setTimeout(() => {
+      redirectToSlideIn();
+    }, 3000);
+
+  } else {
+    // Normal button behavior
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const size = btn.dataset.size;
+
+        if (btn.classList.contains("disabled")) {
+          document.getElementById("invalidModal").style.display = "flex";
+          return;
+        }
+
+        // Check if this size exists in predictions
+        if (!predictedSizes.includes(size)) {
+          document.getElementById("notInBatchModal").style.display = "flex";
+          return;
+        }
+
+        // Proceed with request
+        fetch(`/actuate_size/${size}`, { method: "POST" })
+          .then(res => res.json())
+          .then(data => {
+            if (data.status === "success") {
+              window.location.href = "/slideout"; // go to Slide Out Prompt Page
+            } else {
+              status.style.color = "red";
+              status.textContent = `Error: ${data.message}`;
+            }
+          })
+          .catch(err => {
+            status.style.color = "red";
+            status.textContent = `Request failed: ${err}`;
+          });
+      });
+    });
+  }
+</script>
+
+{% endblock %}

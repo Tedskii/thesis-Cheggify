@@ -1,0 +1,47 @@
+{% extends 'base.html'%} {% block title %}Our Goals{% endblock %} {% block
+content %}
+
+<div class="goals">
+  <div class="container">
+    <div class="goals__wrapper">
+      <div class="header__wrapper">
+        <div class="backbtn__wrapper">
+          <div class="arrow_back">
+            <a href=""><i class="fa-solid fa-arrow-left"></i></a>
+          </div>
+        </div>
+        <div class="aboutText__wrapper">
+          <div class="about__text">
+            <h1>About Us</h1>
+            <h2>Our Study</h2>
+          </div>
+        </div>
+      </div>
+      <div class="goalInfo__wrapper">
+        <div class="logo__wrapper">
+          <img
+            src="{{ url_for('static', filename='images/SLSU LOGO.png') }}"
+            alt="" />
+          <img
+            src="{{ url_for('static', filename='images/CEN.png') }}"
+            alt="" />
+        </div>
+        <div class="goal__text">
+          <p>
+            Our thesis entitled
+            <span>
+              AUTOMATED CLASSIFICATION OF EGG SIZES USING IMAGE PROCESSING AND
+              DEEP LEARNING
+            </span>
+            is an advanced egg classification system that utilizes deep learning
+            and image processing to enhance the accuracy and efficiency of egg
+            size classification. Our goal is to reduce human error, improve
+            consistency, and streamline operations in the poultry industry.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
