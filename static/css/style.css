@@ -71,10 +71,6 @@ a {
   -webkit-tap-highlight-color: transparent;
 }
 
-a:hover {
-  transition: all 0.3s ease;
-  transform: scale(1.05);
-}
 
 li {
   list-style-type: none;
@@ -287,6 +283,14 @@ i {
   flex: 0 0 auto; /* Ensures the back button stays at the side */
 }
 
+.aboutheader__wrapper {
+  text-align: center;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .aboutText__wrapper {
   flex-grow: 1; /* Makes the text wrapper take up remaining space */
   text-align: center;
@@ -310,7 +314,7 @@ i {
   padding-bottom: 3rem;
   text-align: center;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  height: 25rem;
+  height: 19rem;
   max-width: 500px;
   margin: 0 auto;
   overflow: visible;
@@ -345,7 +349,7 @@ i {
   max-width: 1200px; /* Prevents it from being too wide */
   margin: auto; /* Centers it */
   overflow: hidden; /* Hides unwanted scrollbars */
-  padding: 2rem 0;
+  padding: 0.5rem 0;
 }
 
 .carousel__wrapper {
@@ -356,7 +360,7 @@ i {
 }
 
 .carousel__track {
-  padding: 1rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -602,11 +606,6 @@ i {
   cursor: pointer;
 
   transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.sizeList__wrapper li button:hover {
-  transform: scale(1.05);
-  background-color: #2b7030;
 }
 
 
