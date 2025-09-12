@@ -486,7 +486,7 @@ i {
 
 /* LIVE SNAPSHOT */
 .liveSnapshot {
-  padding: 2.5rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -503,11 +503,10 @@ i {
 }
 .liveSnapshotHeader__wrapper {
   text-align: center;
-  padding: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 80rem;
+  width: 55rem;
 }
 
 .liveSnapshot--video {
