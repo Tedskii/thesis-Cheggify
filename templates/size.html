@@ -45,9 +45,9 @@
 <div id="noPredModal" class="confirm-modal" style="display:none;">
   <div class="confirm-modal-content">
     <h3>No egg sizes were detected from the prediction.</h3>
-    <p>Please slide the tray in and try again.</p>
+    <p>Please slide the tray out and try again.</p>
     <div class="confirm-buttons">
-      <button class="confirm-btn confirm-ok" onclick="redirectToSlideIn()">OK</button>
+      <button class="confirm-btn confirm-ok" onclick="redirectToPrompt1()">OK</button>
     </div>
   </div>
 </div>
@@ -75,8 +75,8 @@
     document.getElementById("notInBatchModal").style.display = "none";
   }
 
-  function redirectToSlideIn() {
-    window.location.href = "/slidein";
+  function redirectToPrompt1() {
+    window.location.href = "/prompt1";
   }
 
   // Get processed sizes from Flask

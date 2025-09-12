@@ -43,6 +43,7 @@
 
   /* Touch Target */
   --touch-target-min-size: 44px;
+    cursor:none;
 }
 
 /* Global Base Styles */
@@ -50,7 +51,7 @@ html {
   font-size: var(--font-size-base);
   height: 100%;
   scroll-behavior: smooth;
-  cursor:none;
+  
 }
 
 body {
@@ -447,7 +448,19 @@ i {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  flex: 0 0 auto;
   gap: 2rem;
+}
+.promptHeader__wrapper {
+  text-align: center;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backBtn__wrapper {
+  flex: 0 0 auto; /* don’t grow/shrink */
 }
 .prompt__text {
   font-size: 28px;
@@ -474,6 +487,9 @@ i {
 /* LIVE SNAPSHOT */
 .liveSnapshot {
   padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
 }
 
 .liveSnapshot__wrapper {
@@ -481,7 +497,9 @@ i {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  flex: 0 0 auto;
   gap: 1rem;
+  
 }
 
 .liveSnapshot--video {
@@ -497,6 +515,7 @@ i {
 
 .liveSnapshot--text {
   text-align: center;
+  flex-grow: 1; /* Makes the text wrapper take up remaining space */
 }
 
 .liveSnapshot--text h2 {
