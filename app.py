@@ -223,7 +223,7 @@ def get_latest_image():
 # =======================
 # Size Matrix Extraction (exact working code)
 # =======================
-def extract_size_matrix(image_path, model_path='/home/admin/Desktop/thesisFlask/static/model/best.pt'):
+def extract_size_matrix(image_path, model_path='/home/admin/Desktop/thesisFlask/static/model/best_final.pt'):
     """
     Runs YOLO detection on the captured image and builds a 2D egg tray size matrix.
     """
@@ -231,7 +231,7 @@ def extract_size_matrix(image_path, model_path='/home/admin/Desktop/thesisFlask/
     import numpy as np
 
     model = YOLO(model_path)
-    results = model.predict(image_path, conf=0.49)
+    results = model.predict(image_path, conf=0.49, iou=0.4, agnostic_nms=True)
     result = results[0]
 
     tray_xmin, tray_ymin, tray_xmax, tray_ymax = (350, 0, 1651, 1079)
@@ -262,9 +262,8 @@ def extract_size_matrix(image_path, model_path='/home/admin/Desktop/thesisFlask/
         if 0 <= row_idx < rows and 0 <= col_idx < cols:
             grid[row_idx, col_idx] = label
             detected_sizes.add(label)
-
+    print(grid)
     return grid, results, list(detected_sizes)
-
 
 
 def reset_processed_servos():
